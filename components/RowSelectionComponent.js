@@ -5,10 +5,32 @@ export function RowSelectionComponent(props){
     instance.props = props;
 
     var init = props.init;
+    var deGroupMap = init.des.reduce(function(map,de){
+
+        if (de.dataElementGroups){
+            for (var key in de.dataElementGroups){
+                if(!map[de.dataElementGroups[key].id]){
+                    map[de.dataElementGroups[key].id] = de.dataElementGroups[key];
+                }
+            }
+        }
+        return map;
+    },[]);
+
+    var deGroupList = [];
+    for (var key in deGroupMap){
+        deGroupList.push(deGroupMap[key]);
+    }
+    deGroupList.sort(function(a,b){
+        
+        return a.name > b.name ? 1:-1
+    })
+    
     var decocChangeState = function(){};
     
     var state = {
         de:"-1",
+        degroup:"all",
         coc:"",
         ougroup:"",
         row:""
@@ -19,6 +41,7 @@ export function RowSelectionComponent(props){
     function decocStuffCame(decocState,_decocChangeState){
         
         state = decocState;
+        state.degroup="all";
         instance.setState(state);
         decocChangeState = _decocChangeState;
         
@@ -26,15 +49,33 @@ export function RowSelectionComponent(props){
 
     
     function getDeOptions(){
-        
         var options = init.des.reduce((list,obj)=>{
-            
-            list.push(<option key={obj.id} value={obj.id}>{obj.name}</option>);
+            //debugger
+            if (state.degroup=="all" || checkIfGroupExists(obj.dataElementGroups,state.degroup)){
+                list.push(<option key={obj.id} value={obj.id}>{obj.name}</option>);
+            }
             return list;
         },[<option disabled value = "-1">--please select a de--</option>]);
         return options;
+
+        function checkIfGroupExists(degs,current){
+            for (var key in degs){
+                if (degs[key].id == current){
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
+    function getDeGroupOptions(){
+        var options = deGroupList.reduce((list,obj)=>{
+            list.push(<option key={obj.id} value={obj.id}>{obj.name}</option>);
+            return list;
+        },[<option  value = "all">--all--</option>]);
+        return options;
+    }
+    
     function getCOCOptions(){
         if (state.de == "-1"){return;}
         
@@ -67,6 +108,13 @@ export function RowSelectionComponent(props){
         decocChangeState(state);
     }
 
+    function onDeGroupChange(e){
+        
+        state.degroup = e.target.value;
+        instance.setState(state);        
+        decocChangeState(state);
+    }
+    
     function onCOCChange(e){
         state.coc = e.target.value;
         instance.setState(state);
@@ -108,7 +156,15 @@ export function RowSelectionComponent(props){
             onChange={onRowChange}>
                 </input>
                 </td> </tr>
-                
+
+                <tr> <td>DE Group : </td>
+                    <td><select className="decocDE"
+                                value={state.degroup}
+                                onChange={onDeGroupChange}
+                                >{getDeGroupOptions()}
+                      </select>
+                  </td> </tr>
+              
                   <tr> <td>DE : </td>
                     <td><select className="decocDE"
                                 value={state.de}

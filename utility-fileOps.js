@@ -18,6 +18,7 @@ function utilityFileOps(){
                     });
 
                 }catch(e){
+                    console.log("An error occurred"+e)
                     reject(e)
                 }
             }

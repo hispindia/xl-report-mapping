@@ -13,9 +13,8 @@ export function App(props){
     instance.render = function(){
         var baseName = props.baseURL.split("/")
         baseName = baseName[baseName.length-1];
-        document
-        debugger
-        return (  <Router basename={baseName+"/api/apps/react-skeleton/index.html#"} >                 
+        
+        return (  <Router basename={baseName+"/api/apps/xl-report-mapping/index.html#"} >                 
                   <Switch>
                   <Route exact path="/reports"  component={ReportList}  />
                   <Route exact path="/reports/add"  component={NewReportForm}  />

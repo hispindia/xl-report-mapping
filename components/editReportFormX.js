@@ -31,7 +31,7 @@ export function EditReportForm(props){
         
         var PreportMetadata = dsServiceMeta.getValue(reportKey);
         var PreportData = dsServiceData.getValue(reportKey);
-        var deP = mdService.getObj("dataElements?paging=false&fields=id,name,categoryCombo[id,name,categoryOptionCombos[id,name]]");
+        var deP = mdService.getObj("dataElements?paging=false&fields=id,name,categoryCombo[id,name,categoryOptionCombos[id,name]],dataElementGroups[id,name]");
         var ougP = mdService.getObj("organisationUnitGroups?paging=false&fields=id,name");
         var cocP = mdService.getObj("categoryOptionCombos?fields=id,name&paging=false");
         
@@ -179,6 +179,9 @@ function saveForm(state,e){
                 if (error){
                     console.log("Error saving data");            
                 }
+
+                alert(JSON.stringify(body));
+
             });
         });
     }

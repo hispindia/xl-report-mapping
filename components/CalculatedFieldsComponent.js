@@ -53,6 +53,7 @@ export function CalculatedFieldsComponent(props){
 
     instance.render = function(){
         return (<div className="calcDiv">
+                <h4>Use of this featue is not recommended anymore. You are requested to write any formulas/calculations within the excel template!</h4>
                 <table key="calcFields" className="calcTable">
                 <thead>
                 <tr><th>#</th><th>$</th><th>$</th><th>Row</th><th>Expression</th><th><i>Mapping</i></th></tr>

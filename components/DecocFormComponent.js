@@ -8,10 +8,11 @@ export function DecocFormComponent(props){
     var init = props.init;
 
      var decocRow = {
-        de : "-1",
-        coc :"-1",
-        row: "",
-        ougroup : "nogroup"        
+         de : "-1",
+         degroup:"all",
+         coc :"-1",
+         row: "",
+         ougroup : "nogroup"        
     }
 
     var calcRow = {

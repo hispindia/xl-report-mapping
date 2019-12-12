@@ -56,6 +56,10 @@ export function MetadataFormComponent(props){
                 <option value="OUWiseProgressive">OUWiseProgressive</option>
                 <option value="PeriodWiseProgressive">PeriodWiseProgressive</option></select></td></tr>
 
+               
+                <tr>
+                <td>Report Group : </td><td><input id="reportgroup" onChange={textInputChangedMetadata.bind(null,'reportGroup')} type="text" value={state.metadata.reportGroup} ></input></td>
+                </tr>
                 <tr>
                 <td>Org Unit Level : </td><td><input type="text" id="orgUnitLevel" value={state.metadata.orgUnitLevel} onChange={textInputChangedMetadata.bind(null,'orgUnitLevel')} ></input></td>
                 </tr>

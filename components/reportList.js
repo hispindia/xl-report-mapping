@@ -117,6 +117,7 @@ export function ReportList(){
                       <td>{obj.name}</td>
                       <td>{obj.description}</td>
                       <td>{obj.reportType}</td>
+                      <td>{obj.reportGroup}</td>
                       <td>{obj.periodType}</td>
                       <td>{obj.orgUnitLevel}</td>
                       <td><a href="javascript:void(0);" onClick={downloadExcel.bind(null,obj,index)} >{"excel"} </a></td>
@@ -141,6 +142,7 @@ export function ReportList(){
                 <th>Name</th>
                 <th>Description</th>
                 <th>ReportType</th>
+                <th>ReportGroup</th>
                 <th>Period Type</th>
                 <th>Org Unit Level</th>
                 <th>Excel Template</th>
