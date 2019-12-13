@@ -107,8 +107,40 @@ pre {
         overflow: auto;
 }
 
-.reportListDiv table{
 
-    border-top; 1px solid black;
-        
+
+.simpleTable {
+    table-layout:fixed;
+    word-wrap: break-word;
+    width:-webkit-fill-available;
+    border-collapse: collapse;
+    padding-top: 10px;
+    margin-left: 1%;
 }
+
+.simpleTable td{
+    text-align:center;
+}
+
+.simpleTable tr{
+    border-bottom: 1px solid #cad5e5;
+}
+
+.simpleTable tr:hover
+{
+  background-color: #dfe9f4;
+}
+
+.odd{
+    border-bottom: 1px solid #cad5e5;
+    background-color: #ebf0f6;
+}
+
+.small{
+    width : 5%;
+}
+
+.big{
+    width:20%;
+}
+

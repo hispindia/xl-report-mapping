@@ -15,7 +15,10 @@ export function ReportList(){
 
         var Preports = dsServiceMetadata.getAllKeyValues();
         Promise.all([Preports]).then(function(values){
-            var reports = values[0];        
+            var reports = values[0];
+            reports.sort(function(a,b){
+                return a.name > b.name ? 1:-1;
+            })
             state.reports = reports;
             instance.setState(Object.assign({},state));
         })
@@ -71,7 +74,7 @@ export function ReportList(){
     function downloadExcel(obj,index,e){
 
         getReportData(obj.key,function(data){
-            var fullName = "excelTemplate.xlsx"
+            var fullName = obj.excel.name;
             XLSX.fromDataAsync(data.excelTemplate,{base64:true}).then(function(wb){
                 wb.outputAsync().then(function(blob){
                     if (window.navigator && window.navigator.msSaveOrOpenBlob) {
@@ -111,18 +114,18 @@ export function ReportList(){
     function getRows(){
         var rows = state.reports.reduce((list,obj,index)=>{
 
-            list.push(<tr className={index%2==0?'listRow':'listAlternateRow'} >
-                      <td>{index+1}</td>
-                      <td><input type="button" value="Edit" onClick={edit.bind(null,obj.key)}></input></td>
+            list.push(<tr className={index%2==0?'even':'odd'} >
+                      <td className="small">{index+1}</td>
+                      <td className="small"><input type="button" value="Edit" onClick={edit.bind(null,obj.key)}></input></td>
                       <td>{obj.name}</td>
                       <td>{obj.description}</td>
                       <td>{obj.reportType}</td>
                       <td>{obj.reportGroup}</td>
                       <td>{obj.periodType}</td>
-                      <td>{obj.orgUnitLevel}</td>
-                      <td><a href="javascript:void(0);" onClick={downloadExcel.bind(null,obj,index)} >{"excel"} </a></td>
+                      <td className="small">{obj.orgUnitLevel}</td>
+                      <td><a href="javascript:void(0);" onClick={downloadExcel.bind(null,obj,index)} >{obj.excel.name} </a></td>
                       <td><a href="javascript:void(0);" onClick={downloadMapping.bind(null,obj,index)} >Download Mapping </a></td>
-                      <td><input type="button" value="Remove" onClick={remove.bind(null,obj.key)}></input></td>
+                      <td className="small"><input type="button" value="Remove" onClick={remove.bind(null,obj.key)}></input></td>
                       </tr>);
             return list;
         },[])
@@ -135,19 +138,22 @@ export function ReportList(){
     instance.render = function(){
         return (
                 <div >
-                <table className="listTable">
+                <input type="button" value="New Report" onClick={add}></input>
+
+                <table className="simpleTable">
             <thead>
             <tr>
-                <th>#</th><th></th>
-                <th>Name</th>
-                <th>Description</th>
+                <th >#</th>
+                <th ></th>
+                <th className="big">Name</th>
+                <th >Description</th>
                 <th>ReportType</th>
-                <th>ReportGroup</th>
+                <th className="big">ReportGroup</th>
                 <th>Period Type</th>
-                <th>Org Unit Level</th>
-                <th>Excel Template</th>
+                <th >Org Unit Level</th>
+                <th >Excel Template</th>
                 <th>Mapping File</th>
-                <th></th>
+                <th ></th>
             </tr>
             </thead>
             <tbody>
@@ -155,7 +161,6 @@ export function ReportList(){
             </tbody>
                 
         </table>
-                <input type="button" value="Add" onClick={add}></input>
             </div>
         )
     }
